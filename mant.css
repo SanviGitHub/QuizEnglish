@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lexend', 'Noto Sans', sans-serif;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #4CAF50;
+}
+
+.home-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.home-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.home-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #90accb;
+}
+
+.animate-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
+    animation-delay: calc(var(--order) * 0.2s);
+}
+
+.animate-out {
+    animation: fadeOut 0.5s forwards;
+    animation-delay: calc(var(--order) * 0.2s);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate(var(--x), var(--y));
+    }
+    to {
+        opacity: 0;
+        transform: translate(var(--x), var(--y));
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .home-button {
+        font-size: 1rem;
+        padding: 0.8rem 1.6rem;
+    }
+}

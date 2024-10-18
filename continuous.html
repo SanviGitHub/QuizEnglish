@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+    <title>Sanvi's Past Continuous Quiz</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="continuous.css">
+</head>
+<body>
+    <div id="quiz-container" class="relative flex size-full min-h-screen flex-col bg-[#101923] dark justify-between group/design-root overflow-x-hidden" style="--radio-dot-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(13,124,242)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e'); font-family: Lexend, 'Noto Sans', sans-serif;">
+        <div id="quiz-content" class="transition-opacity duration-500 opacity-100">
+            <div class="flex items-center bg-[#101923] p-4 pb-2 justify-end">
+                <div class="flex w-12 items-center justify-end">
+                    <button id="close-button" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+                        <div class="text-white" data-icon="X" data-size="24px" data-weight="regular">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 p-4">
+                <div class="rounded bg-[#314c68]">
+                    <div id="progress-bar" class="h-2 rounded bg-[#0d7cf2]" style="width: 0%;"></div>
+                </div>
+            </div>
+            <h1 id="quiz-title" class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-left pb-3 pt-5">What was John doing?</h1>
+            <div class="px-4">
+                <div class="image-container">
+                    <img id="quiz-image" src="" alt="Quiz Image" class="quiz-image">
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 p-4" id="quiz-options">
+                <!-- Opciones del cuestionario se llenarán por JavaScript -->
+            </div>
+        </div>
+        <div>
+            <div class="flex px-4 py-3">
+                <button id="submit-button" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 flex-1 bg-[#0d7cf2] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                    <span class="truncate">Submit</span>
+                </button>
+            </div>
+            <div class="h-5 bg-[#101923]"></div>
+        </div>
+    </div>
+    <div id="notification" class="notification"></div> <!-- Notificación -->
+    <script src="continuous.js"></script>
+</body>
+</html>

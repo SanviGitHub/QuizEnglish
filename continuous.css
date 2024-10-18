@@ -1,0 +1,134 @@
+body {
+    font-family: 'Lexend', 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #101923;
+    color: white;
+}
+
+#quiz-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.settings-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.settings-button:hover {
+    color: #0d7cf2;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 20px 16px;
+}
+
+.image-container {
+    width: 100%;
+    padding-top: 100%; /* Aspect ratio 1:1 */
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.quiz-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+}
+
+label.option {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 15px;
+    border: 1px solid #314c68;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+label.option:hover {
+    background-color: #1c2938;
+}
+
+input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #314c68;
+    border-radius: 50%;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input[type="radio"]:checked {
+    border-color: #0d7cf2;
+    background-image: var(--radio-dot-svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+input[type="radio"]:checked + div p {
+    color: #0d7cf2;
+}
+
+#submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0d7cf2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submit-button:hover {
+    background-color: #0a5cb9;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #0d7cf2;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px;
+    }
+    
+    label.option {
+        padding: 12px;
+    }
+}

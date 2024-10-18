@@ -1,0 +1,55 @@
+body {
+    font-family: 'Lexend', 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+label.option {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="radio"]:checked + div {
+    border-color: #0d7cf2;
+}
+
+input[type="radio"]:checked + div p {
+    color: #0d7cf2; /* Cambiar el color del texto si es necesario */
+}
+
+.incorrect {
+    background-color: rgba(255, 0, 0, 0.2); /* Fondo rojo para opción incorrecta */
+}
+
+.correct {
+    background-color: rgba(0, 255, 0, 0.2); /* Fondo verde para opción correcta (si se desea) */
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #0d7cf2;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: opacity 0.5s ease;
+    opacity: 0.9;
+    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px; /* Ajustar tamaño del título en móviles */
+    }
+    .p-4 {
+        padding: 1rem; /* Ajustar el padding en móviles */
+    }
+    button {
+        font-size: 14px; /* Ajusta el tamaño de fuente para móviles */
+        padding: 0.5rem; /* Ajusta el padding */
+    }
+    .flex-1 {
+        min-width: 70%; /* Asegura que el botón ocupe un porcentaje adecuado en móviles */
+    }
+}
