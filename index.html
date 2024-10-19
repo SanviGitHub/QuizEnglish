@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario de Halloween</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-image: url('back.jpeg'); /* Agrega la imagen de fondo */
+            background-size: cover; /* Asegúrate de que la imagen cubra toda la pantalla */
+            background-position: center; /* Centra la imagen */
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+            background-color: rgba(51, 51, 51, 0.8); /* Fondo semi-transparente para mejor legibilidad */
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        #halloween-title {
+            font-size: 4rem;
+            color: #ff6600;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.7);
+            margin: 20px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid #ff6600;
+            animation: cursor-blink 0.7s step-end infinite;
+        }
+
+        @keyframes cursor-blink {
+            50% { border-color: transparent; }
+        }
+
+        #quiz-container {
+            background-color: #333333;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(255,102,0,0.3);
+            margin-top: 20px;
+        }
+
+        #quiz-title, #quiz-description {
+            color: #ff6600;
+            margin-bottom: 10px;
+        }
+
+        #question-container {
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        button:hover {
+            background-color: #ff8533;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background-color: #666666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 600px) {
+            #halloween-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="halloween-title" aria-label="Halloween">Halloween</h1>
+        <div id="quiz-container">
+            <h2 id="quiz-title"></h2>
+            <p id="quiz-description"></p>
+            <div id="question-container"></div>
+            <div id="navigation">
+                <button id="prev-btn">Anterior</button>
+                <button id="next-btn">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizzes = [
+            {
+                title: "Halloween: La Diversión (Nivel Fácil)",
+                difficulty: "Fácil",
+                description: "¡Perfecto para los más pequeños! Preguntas sencillas sobre Halloween.",
+                questions: [
+                    {
+                        question: "¿Qué fruta se usa para hacer linternas en Halloween?",
+                        answers: ["Manzana", "Calabaza", "Naranja", "Sandía"],
+                        correctAnswer: "Calabaza"
+                    },
+                    {
+                        question: "¿Qué dicen los niños cuando piden dulces en Halloween?",
+                        answers: ["Por favor, dame dulces", "Truco o trato", "Feliz Halloween", "Quiero caramelos"],
+                        correctAnswer: "Truco o trato"
+                    },
+                    {
+                        question: "¿Qué animal se asocia a menudo con las brujas?",
+                        answers: ["Perro", "Gato negro", "Pájaro", "Ratón"],
+                        correctAnswer: "Gato negro"
+                    },
+                    {
+                        question: "¿Qué color se asocia más con Halloween junto con el naranja?",
+                        answers: ["Rojo", "Azul", "Verde", "Negro"],
+                        correctAnswer: "Negro"
+                    }
+                ]
+            },
+            {
+                title: "Halloween: Las Tradiciones (Nivel Intermedio)",
+                difficulty: "Intermedio",
+                description: "Un poco más desafiante. ¡Pon a prueba tus conocimientos sobre las tradiciones de Halloween!",
+                questions: [
+                    {
+                        question: "¿En qué país se originó la tradición de tallar calabazas?",
+                        answers: ["Estados Unidos", "Irlanda", "Inglaterra", "México"],
+                        correctAnswer: "Irlanda"
+                    },
+                    {
+                        question: "¿Qué vegetal se usaba originalmente para hacer linternas antes que las calabazas?",
+                        answers: ["Remolacha", "Nabo", "Patata", "Zanahoria"],
+                        correctAnswer: "Nabo"
+                    },
+                    {
+                        question: "¿Cómo se llama el juego de Halloween donde se intenta atrapar manzanas flotando en agua con la boca?",
+                        answers: ["Pesca de manzanas", "Manzanas flotantes", "Bobbing for apples", "Atrapa la manzana"],
+                        correctAnswer: "Bobbing for apples"
+                    },
+                    {
+                        question: "¿Qué significa la palabra 'Halloween'?",
+                        answers: ["Noche de brujas", "Víspera de Todos los Santos", "Día de las calabazas", "Fiesta de disfraces"],
+                        correctAnswer: "Víspera de Todos los Santos"
+                    }
+                ]
+            },
+            {
+                title: "Halloween: Los Expertos (Nivel Difícil)",
+                difficulty: "Difícil",
+                description: "¡Cuidado! Este nivel es para verdaderos expertos en Halloween. ¿Te atreves?",
+                questions: [
+                    {
+                        question: "¿Qué festival celta es considerado el precursor de Halloween?",
+                        answers: ["Beltane", "Imbolc", "Lughnasadh", "Samhain"],
+                        correctAnswer: "Samhain"
+                    },
+                    {
+                        question: "¿En qué siglo se originó la tradición de Halloween?",
+                        answers: ["Siglo V", "Siglo X", "Siglo XV", "Siglo XX"],
+                        correctAnswer: "Siglo V"
+                    },
+                    {
+                        question: "¿Qué famoso autor escribió la novela 'Drácula', que se ha convertido en un ícono de Halloween?",
+                        answers: ["Mary Shelley", "Edgar Allan Poe", "Bram Stoker", "H.P. Lovecraft"],
+                        correctAnswer: "Bram Stoker"
+                    },
+                    {
+                        question: "¿Cuál es el nombre de la celebración mexicana que coincide con Halloween y honra a los muertos?",
+                        answers: ["Día de Muertos", "Fiesta de las Calaveras", "Noche de las Ánimas", "Todos Santos"],
+                        correctAnswer: "Día de Muertos"
+                    }
+                ]
+            }
+        ];
+
+        let currentQuiz = 0;
+        let currentQuestion = 0;
+
+        const titleElement = document.getElementById('halloween-title');
+        const quizTitleElement = document.getElementById('quiz-title');
+        const quizDescriptionElement = document.getElementById('quiz-description');
+        const questionContainer = document.getElementById('question-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function animateTitle() {
+            const text = titleElement.textContent;
+            const speed = 150; // milisegundos entre cada letra
+
+            titleElement.textContent = '';
+            let i = 0;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    titleElement.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+
+            typeWriter();
+        }
+
+        function loadQuestion() {
+            const quiz = quizzes[currentQuiz];
+            const question = quiz.questions[currentQuestion];
+            
+            quizTitleElement.textContent = quiz.title;
+            quizDescriptionElement.textContent = quiz.description;
+            
+            questionContainer.innerHTML = `
+                <h3>${question.question}</h3>
+                ${question.answers.map((answer, index) => `
+                    <button onclick="selectAnswer(${index})">${answer}</button>
+                `).join('')}
+                <p id="result"></p>
+            `;
+            
+            updateNavigation();
+        }
+
+        function selectAnswer(index) {
+            const quiz = quizzes[currentQuiz];
+            const question = quiz.questions[currentQuestion];
+            const selectedAnswer = question.answers[index];
+            const resultElement = document.getElementById('result');
+            
+            if (selectedAnswer === question.correctAnswer) {
+                resultElement.textContent = "¡Correcto! ¡Muy bien!";
+                resultElement.style.color = "#4CAF50";
+            } else {
+                resultElement.textContent = `Ups, no es correcto. La respuesta correcta es: ${question.correctAnswer}`;
+                resultElement.style.color = "#F44336";
+            }
+            
+            // Disable answer buttons after selection
+            const answerButtons = questionContainer.querySelectorAll('button');
+            answerButtons.forEach(button => button.disabled = true);
+        }
+
+        function updateNavigation() {
+            prevBtn.disabled = currentQuiz === 0 && currentQuestion === 0;
+            nextBtn.disabled = currentQuiz === quizzes.length - 1 && currentQuestion === quizzes[currentQuiz].questions.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+            } else if (currentQuiz > 0) {
+                currentQuiz--;
+                currentQuestion = quizzes[currentQuiz].questions.length - 1;
+            }
+            loadQuestion();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < quizzes[currentQuiz].questions.length - 1) {
+                currentQuestion++;
+            } else if (currentQuiz < quizzes.length - 1) {
+                currentQuiz++;
+                currentQuestion = 0;
+            }
+            loadQuestion();
+        });
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', function() {
+            animateTitle();
+            loadQuestion();
+        });
+    </script>
+</body>
+</html>
