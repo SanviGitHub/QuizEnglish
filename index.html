@@ -3,80 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuestionario de Halloween</title>
+    <title>Cuestionario de Halloween Ultra Decorado</title>
     <style>
-        body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background-image: url('back.jpeg'); /* Agrega la imagen de fondo */
-            background-size: cover; /* Asegúrate de que la imagen cubra toda la pantalla */
-            background-position: center; /* Centra la imagen */
-            color: #ffffff;
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #ff6600;
+            --secondary-color: #8b00ff;
+            --background-color: #1a0000;
+            --text-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' /%3E%3C/g%3E%3C/svg%3E"),
+                radial-gradient(circle, #3a0000 0%, #1a0000 100%);
+            background-attachment: fixed;
         }
 
         .container {
             max-width: 800px;
-            width: 90%;
-            margin: 20px auto;
-            text-align: center;
-            background-color: rgba(51, 51, 51, 0.8); /* Fondo semi-transparente para mejor legibilidad */
-            border-radius: 15px;
-            padding: 20px;
+            width: 100%;
+            background-color: rgba(26, 0, 0, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px var(--primary-color), 0 0 50px var(--secondary-color);
+            position: relative;
+            overflow: hidden;
         }
 
         #halloween-title {
-            font-size: 4rem;
-            color: #ff6600;
-            text-shadow: 0 0 10px rgba(255, 102, 0, 0.7);
-            margin: 20px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 3px solid #ff6600;
-            animation: cursor-blink 0.7s step-end infinite;
+            font-family: 'Creepster', cursive;
+            font-size: 5rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 
+                0 0 10px var(--primary-color),
+                0 0 20px var(--secondary-color),
+                0 0 30px var(--secondary-color);
+            animation: pulsate 1.5s infinite alternate, float 3s ease-in-out infinite;
         }
 
-        @keyframes cursor-blink {
-            50% { border-color: transparent; }
+        @keyframes pulsate {
+            0% { text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); }
+            100% { text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--secondary-color), 0 0 40px var(--secondary-color); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         #quiz-container {
-            background-color: #333333;
+            background-color: rgba(51, 0, 0, 0.6);
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 0 20px rgba(255,102,0,0.3);
             margin-top: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         #quiz-title, #quiz-description {
-            color: #ff6600;
-            margin-bottom: 10px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #quiz-title {
+            font-size: 2rem;
+            font-weight: bold;
         }
 
         #question-container {
             margin: 20px 0;
+            text-align: center;
         }
 
         button {
-            background-color: #ff6600;
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--background-color);
             border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 25px;
+            padding: 12px 24px;
+            margin: 10px 5px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1em;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px var(--primary-color);
         }
 
         button:hover {
-            background-color: #ff8533;
-            transform: scale(1.05);
+            background-color: var(--secondary-color);
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 0 20px var(--secondary-color);
         }
 
         button:disabled {
@@ -94,18 +132,146 @@
         #result {
             font-weight: bold;
             margin-top: 15px;
-            font-size: 1.2em;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
-        @media (max-width: 600px) {
+        .decoration {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .ghost {
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .bat {
+            animation: fly 10s infinite linear;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(-100%, -100%) rotate(0deg); }
+            100% { transform: translate(100vw, 100vh) rotate(360deg); }
+        }
+
+        #cauldron {
+            font-size: 50px;
+            margin-top: 20px;
+            text-align: center;
+            animation: bubble 2s infinite ease-in-out;
+        }
+
+        @keyframes bubble {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .spider {
+            position: absolute;
+            font-size: 40px;
+            top: -20px;
+            animation: swing 5s infinite ease-in-out;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .cobweb {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M0 0 L100 100 M100 0 L0 100 M50 0 L50 100 M0 50 L100 50' stroke='rgba(255,255,255,0.1)' stroke-width='1'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .moon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #ffd700;
+        }
+
+        .tree {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            font-size: 100px;
+            color: #4a0e0e;
+            text-shadow: 0 0 10px #000;
+        }
+
+        .credits {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            #halloween-title {
+                font-size: 3rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .moon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .tree {
+                font-size: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
             #halloween-title {
                 font-size: 2.5rem;
+            }
+
+            #quiz-title {
+                font-size: 1.5rem;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+
+            .moon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .tree {
+                font-size: 60px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="moon"></div>
+        <div class="tree">🌳</div>
         <h1 id="halloween-title" aria-label="Halloween">Halloween</h1>
         <div id="quiz-container">
             <h2 id="quiz-title"></h2>
@@ -116,6 +282,8 @@
                 <button id="next-btn">Siguiente</button>
             </div>
         </div>
+        <div id="cauldron">🧪</div>
+        <div class="credits">Developers: Santi & v0.dev</div>
     </div>
 
     <script>
@@ -213,9 +381,25 @@
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
 
+        const successMessages = [
+            "¡Excelente! Eres un maestro del terror.",
+            "¡Increíble! Has dominado este desafío espeluznante.",
+            "¡Fantástico! Tu conocimiento de Halloween es impresionante.",
+            "¡Bravo! Has superado esta prueba con  valentía.",
+            "¡Asombroso! Eres un verdadero experto en Halloween."
+        ];
+
+        const errorMessages = [
+            "¡Ups! Parece que los fantasmas te han engañado esta vez.",
+            "¡Oh no! La respuesta correcta se ha escondido en las sombras.",
+            "¡Casi! Pero los espíritus traviesos te han confundido.",
+            "¡Vaya! Parece que las brujas han mezclado tus pensamientos.",
+            "¡Ay! Los zombies se han comido la respuesta correcta."
+        ];
+
         function animateTitle() {
             const text = titleElement.textContent;
-            const speed = 150; // milisegundos entre cada letra
+            const speed = 150;
 
             titleElement.textContent = '';
             let i = 0;
@@ -256,14 +440,15 @@
             const resultElement = document.getElementById('result');
             
             if (selectedAnswer === question.correctAnswer) {
-                resultElement.textContent = "¡Correcto! ¡Muy bien!";
-                resultElement.style.color = "#4CAF50";
+                resultElement.textContent = successMessages[Math.floor(Math.random() * successMessages.length)];
+                resultElement.style.color = "#00ff00";
+                playSound('correct');
             } else {
-                resultElement.textContent = `Ups, no es correcto. La respuesta correcta es: ${question.correctAnswer}`;
-                resultElement.style.color = "#F44336";
+                resultElement.textContent = `${errorMessages[Math.floor(Math.random() * errorMessages.length)]} La respuesta correcta era: ${question.correctAnswer}`;
+                resultElement.style.color = "#ff0000";
+                playSound('incorrect');
             }
             
-            // Disable answer buttons after selection
             const answerButtons = questionContainer.querySelectorAll('button');
             answerButtons.forEach(button => button.disabled = true);
         }
@@ -293,10 +478,69 @@
             loadQuestion();
         });
 
-        // Initial load
+        function addDecorativeElements() {
+            const container = document.querySelector('.container');
+            const decorations = [
+                { type: 'ghost', emoji: '👻' },
+                { type: 'skull', emoji: '💀' },
+                { type: 'pumpkin', emoji: '🎃' },
+                { type: 'bat', emoji: '🦇' },
+                { type: 'spider', emoji: '🕷️' },
+                { type: 'witch', emoji: '🧙' },
+                { type: 'zombie', emoji: '🧟' },
+                { type: 'vampire', emoji: '🧛' },
+                { type: 'black_cat', emoji: '🐈‍⬛' },
+                { type: 'coffin', emoji: '⚰️' },
+            ];
+
+            for (let i = 0; i < 15; i++) {
+                const decoration = decorations[Math.floor(Math.random() * decorations.length)];
+                const element = document.createElement('div');
+                element.textContent = decoration.emoji;
+                element.classList.add('decoration', decoration.type);
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                container.appendChild(element);
+            }
+
+            // Añadir telarañas
+            for (let i = 0; i < 4; i++) {
+                const cobweb = document.createElement('div');
+                cobweb.classList.add('cobweb');
+                cobweb.style.left = `${i * 25}%`;
+                cobweb.style.top = '0';
+                container.appendChild(cobweb);
+            }
+
+            // Añadir araña colgante
+            const spider = document.createElement('div');
+            spider.textContent = '🕷️';
+            spider.classList.add('spider');
+            spider.style.left = '50%';
+            container.appendChild(spider);
+        }
+
+        const sounds = {
+            correct: new Audio('https://freesound.org/data/previews/456/456963_9497060-lq.mp3'),
+            incorrect: new Audio('https://freesound.org/data/previews/456/456965_9497060-lq.mp3'),
+            hover: new Audio('https://freesound.org/data/previews/457/457038_9497060-lq.mp3')
+        };
+
+        function playSound(sound) {
+            sounds[sound].currentTime = 0;
+            sounds[sound].play();
+        }
+
+        document.addEventListener('mouseover', function(event) {
+            if (event.target.tagName === 'BUTTON') {
+                playSound('hover');
+            }
+        }, true);
+
         document.addEventListener('DOMContentLoaded', function() {
             animateTitle();
             loadQuestion();
+            addDecorativeElements();
         });
     </script>
 </body>
