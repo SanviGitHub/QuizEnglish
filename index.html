@@ -219,6 +219,22 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
+        #progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        #progress {
+            width: 0;
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
         @media (max-width: 768px) {
             #halloween-title {
                 font-size: 3rem;
@@ -281,6 +297,9 @@
                 <button id="prev-btn">Anterior</button>
                 <button id="next-btn">Siguiente</button>
             </div>
+            <div id="progress-bar">
+                <div id="progress"></div>
+            </div>
         </div>
         <div id="cauldron">🧪</div>
         <div class="credits">Developers: Santi & v0.dev</div>
@@ -315,11 +334,67 @@
                     }
                 ]
             },
-            // ... (el resto de tus quizzes)
+            {
+                title: "Halloween: El Misterio (Nivel Intermedio)",
+                difficulty: "Intermedio",
+                description: "¡Pon a prueba tus conocimientos sobre Halloween con estas preguntas más desafiantes!",
+                questions: [
+                    {
+                        question: "¿En qué país se originó la celebración de Halloween?",
+                        answers: ["Estados Unidos", "México", "Irlanda", "Inglaterra"],
+                        correctAnswer: "Irlanda"
+                    },
+                    {
+                        question: "¿Qué significa la palabra 'Halloween'?",
+                        answers: ["Noche de brujas", "Víspera de Todos los Santos", "Día de los muertos", "Fiesta de disfraces"],
+                        correctAnswer: "Víspera de Todos los Santos"
+                    },
+                    {
+                        question: "¿Qué criatura mitológica se dice que puede transformarse en murciélago?",
+                        answers: ["Hombre lobo", "Zombi", "Vampiro", "Fantasma"],
+                        correctAnswer: "Vampiro"
+                    },
+                    {
+                        question: "¿Cuál es el nombre de la festividad mexicana que coincide con Halloween?",
+                        answers: ["Día de los Muertos", "Fiesta de las Calaveras", "Noche de las Ánimas", "Todos Santos"],
+                        correctAnswer: "Día de los Muertos"
+                    }
+                ]
+            },
+            {
+                title: "Halloween: El Terror (Nivel Avanzado)",
+                difficulty: "Avanzado",
+                description: "¡Solo para los verdaderos expertos en Halloween! Preguntas muy difíciles sobre la historia y cultura de esta festividad.",
+                questions: [
+                    {
+                        question: "¿Qué antigua festividad celta es el origen de Halloween?",
+                        answers: ["Beltane", "Samhain", "Imbolc", "Lughnasadh"],
+                        correctAnswer: "Samhain"
+                    },
+                    {
+                        question: "¿En qué año se estrenó la película de terror 'Halloween' de John Carpenter?",
+                        answers: ["1976", "1978", "1980", "1982"],
+                        correctAnswer: "1978"
+                    },
+                    {
+                        question: "¿Qué famoso ilusionista murió el día de Halloween de 1926?",
+                        answers: ["David Copperfield", "Harry Houdini", "David Blaine", "Penn Jillette"],
+                        correctAnswer: "Harry Houdini"
+                    },
+                    {
+                        question: "¿Qué ciudad estadounidense es conocida como la 'Capital de Halloween del mundo'?",
+                        answers: ["Salem, Massachusetts", "New Orleans, Louisiana", "Sleepy Hollow, New York", "Anoka, Minnesota"],
+                        correctAnswer: "Salem, Massachusetts"
+                    }
+                ]
+            }
         ];
     
         let currentQuiz = 0;
         let currentQuestion = 0;
+        let score = 0;
+    
+        
     
         const titleElement = document.getElementById('halloween-title');
         const quizTitleElement = document.getElementById('quiz-title');
@@ -327,12 +402,13 @@
         const questionContainer = document.getElementById('question-container');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress');
     
         const successMessages = [
             "¡Excelente! Eres un maestro del terror.",
             "¡Increíble! Has dominado este desafío espeluznante.",
             "¡Fantástico! Tu conocimiento de Halloween es impresionante.",
-            "¡Bravo! Has superado esta prueba con  valentía.",
+            "¡Bravo! Has superado esta prueba con valentía.",
             "¡Asombroso! Eres un verdadero experto en Halloween."
         ];
     
@@ -378,6 +454,7 @@
             `;
             
             updateNavigation();
+            updateProgressBar();
         }
     
         function selectAnswer(index) {
@@ -390,6 +467,24 @@
                 resultElement.textContent = successMessages[Math.floor(Math.random() * successMessages.length)];
                 resultElement.style.color = "#00ff00";
                 playSound('correct');
+                score++;
+
+                // Check if it's the last question of the current quiz
+                if (currentQuestion === quiz.questions.length - 1) {
+                    if (currentQuiz < quizzes.length - 1) {
+                        // Auto-redirect to the next quiz level
+                        setTimeout(() => {
+                            currentQuiz++;
+                            currentQuestion = 0;
+                            loadQuestion();
+                        }, 2000);
+                    } else {
+                        // This is the last quiz, show final score
+                        setTimeout(() => {
+                            showFinalScore();
+                        }, 2000);
+                    }
+                }
             } else {
                 resultElement.textContent = `${errorMessages[Math.floor(Math.random() * errorMessages.length)]} La respuesta correcta era: ${question.correctAnswer}`;
                 resultElement.style.color = "#ff0000";
@@ -403,6 +498,13 @@
         function updateNavigation() {
             prevBtn.disabled = currentQuiz === 0 && currentQuestion === 0;
             nextBtn.disabled = currentQuiz === quizzes.length - 1 && currentQuestion === quizzes[currentQuiz].questions.length - 1;
+        }
+    
+        function updateProgressBar() {
+            const totalQuestions = quizzes.reduce((acc, quiz) => acc + quiz.questions.length, 0);
+            const currentProgress = quizzes.slice(0, currentQuiz).reduce((acc, quiz) => acc + quiz.questions.length, 0) + currentQuestion + 1;
+            const progressPercentage = (currentProgress / totalQuestions) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
         }
     
         prevBtn.addEventListener('click', () => {
@@ -476,6 +578,30 @@
         function playSound(sound) {
             sounds[sound].currentTime = 0;
             sounds[sound].play();
+        }
+    
+        function showFinalScore() {
+            const totalQuestions = quizzes.reduce((acc, quiz) => acc + quiz.questions.length, 0);
+            const percentage = (score / totalQuestions) * 100;
+            
+            questionContainer.innerHTML = `
+                <h3>¡Felicidades! Has completado todos los niveles.</h3>
+                <p>Tu puntuación final es: ${score} de ${totalQuestions}</p>
+                <p>Porcentaje de aciertos: ${percentage.toFixed(2)}%</p>
+                <button onclick="restartQuiz()">Volver a jugar</button>
+            `;
+            
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+        }
+    
+        function restartQuiz() {
+            currentQuiz = 0;
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+            prevBtn.style.display = 'block';
+            nextBtn.style.display = 'block';
         }
     
         document.addEventListener('mouseover', function(event) {
